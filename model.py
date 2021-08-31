@@ -86,3 +86,5 @@ class Bojisce:
                 out += str(s)
             out += '\n'
         return out
+
+    class Vojna:
