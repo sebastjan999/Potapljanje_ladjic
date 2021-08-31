@@ -99,9 +99,6 @@ class Vojna:
         self.trenutniIgralci = 1
         self.maxStLadij = maxStLadij
 
-#manjka se: preverba kok je igralcev, pol kko enga igralca dodamo, pol postavlanje ladij,
-#pol kko ustrelmo v polje(ladja/morje), kdo je na vrsti, pa kdaj se igra zakljuci in kdo jo zmaga.
-
     def pridruziIgralca(self):
         
         self.trenutniIgralci += 1
