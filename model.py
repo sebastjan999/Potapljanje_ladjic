@@ -88,3 +88,16 @@ class Bojisce:
         return out
 
     class Vojna:
+        def __init__(self, stIgralcev, sirina, visina, maxStLadij):
+
+            'kok igralcev igra, sirina&visina povesta velkost bojisča'
+            'macStLadij je pa kok ladij mormo postaut predn zacnemo z vojno'
+
+            self.stIgralcev = stIgralcev
+            self.bojisca = [Bojisce(sirina, visina) for _ in range(self.stIgralcev)]
+            self.naVrsti = 0
+            self.trenutniIgralci = 1
+            self.maxStLadij = maxStLadij
+
+#manjka se: preverba kok je igralcev, pol kko enga igralca dodamo, pol postavlanje ladij,
+#pol kko ustrelmo v polje(ladja/morje), kdo je na vrsti, pa kdaj se igra zakljuci in kdo jo zmaga.
