@@ -20,6 +20,7 @@ class Bojisce:
         self.polja = [ [Polje.Morje] * self.sirina for _ in range(self.visina) ]
     
     def postaviLadjo(self, x, y, n, smer):
+
         'x in y sta koordinati ladje'
         'n je velikost ladje'
         'smer je pa lahko vertikalna(V) ali pa horizontalna(H), odvisn kam se ladjica širi'
@@ -33,8 +34,10 @@ class Bojisce:
             y += dy
     
     def ustreli(self, x, y):
+
         'x, y koordinati kam ustrelmo'
         'return je pa a smo zadel ladjo al pa ne'
+
         polje = self.polja[y][x]
         if polje == Polje.Morje:
             self.polja[y][x] = Polje.Zgreseno
@@ -43,3 +46,43 @@ class Bojisce:
             self.polja[y][x] = Polje.Zadeto
             return Polje.Zadeto
         return polje
+
+    def jeZivo(self):
+
+        'a so se kksne ladje na bojišču?'
+
+        for v in self.polja:
+            for s in v:
+                if s == Polje.Ladja:
+                    return True
+        return False
+
+    def kotIgralec(self):
+
+        'kko js kt plejer vidm bojišče'
+
+        return [[str(s) for s in vr] for vr in self.polja]
+
+    def kotNasprotnik(self):
+
+        'kko vid bojišče moj nasprotnik'
+
+        bojisce = []
+        for v in self.polja:
+            vr = []
+            for s in v:
+                if s == Polje.Ladja:
+                    vr.append(str(Polje.Morje))
+                else:
+                    vr.append(str(s))
+            bojisce.append(vr)
+        return bojisce
+
+    def __str__(self):
+
+        out = ''
+        for v in self.polja:
+            for s in v:
+                out += str(s)
+            out += '\n'
+        return out
