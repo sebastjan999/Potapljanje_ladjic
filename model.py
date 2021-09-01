@@ -21,9 +21,9 @@ class Bojisce:
     
     def postaviLadjo(self, x, y, n, smer):
 
-        'x in y sta koordinati ladje'
-        'n je velikost ladje'
-        'smer je pa lahko vertikalna(V) ali pa horizontalna(H), odvisn kam se ladjica širi'
+        """x in y sta koordinati ladje
+        n je velikost ladje
+        smer je pa lahko vertikalna(V) ali pa horizontalna(H), odvisn kam se ladjica širi"""
 
         self.stLadij += 1
         dx = int(smer == 'H')
@@ -35,8 +35,8 @@ class Bojisce:
     
     def ustreli(self, x, y):
 
-        'x, y koordinati kam ustrelmo'
-        'return je pa a smo zadel ladjo al pa ne'
+        """x, y koordinati kam ustrelmo
+        return je pa a smo zadel ladjo al pa ne"""
 
         polje = self.polja[y][x]
         if polje == Polje.Morje:
@@ -49,7 +49,7 @@ class Bojisce:
 
     def jeZivo(self):
 
-        'a so se kksne ladje na bojišču?'
+        """a so se kksne ladje na bojišču?"""
 
         for v in self.polja:
             for s in v:
@@ -59,13 +59,13 @@ class Bojisce:
 
     def kotIgralec(self):
 
-        'kko js kt plejer vidm bojišče'
+        """kko js kt plejer vidm bojišče"""
 
         return [[str(s) for s in vr] for vr in self.polja]
 
     def kotNasprotnik(self):
 
-        'kko vid bojišče moj nasprotnik'
+        """kko vid bojišče moj nasprotnik"""
 
         bojisce = []
         for v in self.polja:
@@ -90,8 +90,8 @@ class Bojisce:
 class Vojna:
     def __init__(self, stIgralcev, sirina, visina, maxStLadij):
 
-        'kok igralcev igra, sirina&visina povesta velkost bojisča'
-        'macStLadij je pa kok ladij mormo postaut predn zacnemo z vojno'
+        """kok igralcev igra, sirina&visina povesta velkost bojisča
+        maxStLadij je pa kok ladij mormo postaut predn zacnemo z vojno"""
 
         self.stIgralcev = stIgralcev
         self.bojisca = [Bojisce(sirina, visina) for _ in range(self.stIgralcev)]
@@ -108,15 +108,15 @@ class Vojna:
         return self.trenutniIgralci == self.stIgralcev
 
     def postaviLadjo(self, igralec, x, y, n, smer):
-        'igralec pove kdo je na vrst'
-        'x,y koordinati ladje, n velikost ladje'
-        'pa se smer al H al V'
+        """igralec pove kdo je na vrst'
+        x,y koordinati ladje, n velikost ladje
+        pa se smer al H al V"""
 
         self.bojisca[igralec].postaviLadjo(x, y, n, smer)
 
     def ustreli(self, igralec, x, y):
         
-        'x, y koordinati strela'
+        """x, y koordinati strela"""
 
         self.naVrsti = self.naVrsti + 1
         if self.naVrsti >= self.stIgralcev:
@@ -125,12 +125,12 @@ class Vojna:
         return self.bojisca[igralec].ustreli(x, y)
 
     def kotIgralec(self, igralec):
-        'kko vidmo bojisce kt plejer...kt neka matrika lol'
+        """kko vidmo bojisce kt plejer...kt neka matrika lol"""
 
         return self.bojisca[igralec].kotIgralec()
 
     def kotNasprotnik(self, igralec):
-        'kko nasprotnik vid'
+        """kko nasprotnik vid"""
 
         return self.bojisca[igralec].kotNasprotnik()
 
@@ -142,7 +142,7 @@ class Vojna:
         return True
 
     def zmagovalec(self):
-        'ce je kdo ze zmagu, vrne stevilko unga k zmaga, drgac da pa None'
+        """ce je kdo ze zmagu, vrne stevilko unga k zmaga, drgac da pa None"""
 
         z = None
         for i, b in enumerate(self.bojisca):
