@@ -87,7 +87,7 @@ class Bojisce:
 
 class Vojna:
     def __init__(self, stIgralcev, sirina, visina, maxStLadij):
-        """kok igralcev igra, sirina&visina povesta velkost bojisča
+        """kok igralcev igra, sirina & visina povesta velkost bojisča
         maxStLadij je pa kok ladij mormo postaut predn zacnemo z vojno"""
 
         self.stIgralcev = stIgralcev
