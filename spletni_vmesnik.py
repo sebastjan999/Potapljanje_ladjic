@@ -1,7 +1,7 @@
 from bottle import *
 import tekstovni_vmesnik
 import json
-import string
+
 
 igra = tekstovni_vmesnik.Igra()
 
