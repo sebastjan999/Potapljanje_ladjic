@@ -1,6 +1,9 @@
-/* Funkcija ki caka da se nekaj zgodi na strezniku in potem nekaj izvede*/
-
-
+/**
+ * Funkcija ki caka da se nekaj zgodi na strezniku in potem nekaj izvede
+ * @param  {String}             url         Povezava ki se preverja z preveri_f
+ * @param  {(String|function)}  callback    Lokacija preusmeritve ce String oz callback funkcija
+ * @param  {function}           [preveri_f = (el) => el =='true']   Funkcija za preverjanje konec cakanja (privzeto odgovor == 'true')
+ */
 function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
     let interval;
     // Definiraj funkcijo za preverjanje
@@ -27,9 +30,11 @@ function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
     }, 500);
 }
 
-/* ustvarjanje tabele */
-
-
+/**
+ * Ustvari tabelo za igranje ladic
+ * @param  {HTMLElement} parent Stars kateremu se pripne ustvarjena tabela
+ * @return {HTMLElement}        Ustvarjena tabela
+ */
 function ustvariTabelo(parent) {
     // Ustvari strukturo tabele
     let t = document.createElement("table");
@@ -92,3 +97,19 @@ $(() => {
     // Ce obstaja main metoda jo poklici
     if(typeof main != 'undefined') main();
 });
+
+/**
+ * Vrne element tabele na x, y koordinati
+ * @param  {HTMLElement}    tabela  Tabela v kateri iscemo
+ * @param  {number}         x       X koordinata
+ * @param  {number}         y       Y koordinata
+ * @return {?HTMLElement}
+ */
+function at(tabela, x, y) {
+    if(x < 0 || y < 0) return undefined;
+    try {
+        return tabela.children[1].children[y].children[1 + x];
+    } catch(e) {
+        return undefined;
+    }
+}
