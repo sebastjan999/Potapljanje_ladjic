@@ -1,5 +1,6 @@
 from bottle import *
 import tekstovni_vmesnik
+import json
 
 igra = tekstovni_vmesnik.Igra()
 
@@ -54,8 +55,6 @@ def vsiIgralci(id_igre):
         return 'true'
     return 'false'
 
-#dokoncaj se danes nujnoooo!!!!!!!!!(drgac bo cajt sou pol bos pa spet joku XD)
-#se za postavt ladjice, pa kko cilat, pa kdo zmagfa/zgubi pa te force treba nardit!!!
 
 @post('/igra/postaviLadjo/<id_igre>')
 def postaviLadjo(id_igre):
@@ -85,7 +84,26 @@ def vseLadje(id_igre):
     return 'false'
 
 
-##
+@post('/igra/bojisca/<id_igre>/<igralec:int>')
+def bojisca(id_igre, igralec):
+    """Zapakiraj vsa bojisca igre v pogledu igralca
+
+       vrne pogled na bitko v json obliki
+    """
+    if igra.igraObstaja(id_igre):
+        out = {
+            "domace" : None,
+            "tuje" : []
+        }
+        v = igra.vrniVojno(id_igre)
+        for i in range(v.stIgralcev):
+            if i != igralec:
+                out["tuje"].append( v.kotNasprotnik(i) )
+            else:
+                out["domace"] = v.kotIgralec(i)
+
+        return json.dumps(out)
+    return 'Igra ne obstaja!'
 
 @post('/igra/naVrsti/<id_igre>/<igralec:int>')
 def naVrsti(id_igre, igralec):
@@ -106,4 +124,4 @@ def zmagovalec(id_igre):
         return 'undefined'
     return 'Igra ne obstaja!'
 
-##run(host='127.0.0.1', port=5002)
+run(host='127.0.0.1', port=5002)
