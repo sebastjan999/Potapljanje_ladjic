@@ -1,14 +1,16 @@
 import enum
 from typing import List
 
+
 class Polje(enum.Enum):
-    Morje    = b'.'
-    Ladja    = b'#'
-    Zadeto   = b'X'
+    Morje = b'.'
+    Ladja = b'#'
+    Zadeto = b'X'
     Zgreseno = b'O'
 
     def __str__(self):
         return self.value.decode('utf-8')
+
 
 class Bojisce:
     polja: List[List[Polje]]
@@ -17,24 +19,22 @@ class Bojisce:
         self.sirina = visina
         self.visina = sirina
         self.stLadij = 0
-        self.polja = [ [Polje.Morje] * self.sirina for _ in range(self.visina) ]
-    
-    def postaviLadjo(self, x, y, n, smer):
+        self.polja = [[Polje.Morje] * self.sirina for _ in range(self.visina)]
 
+    def postaviLadjo(self, x, y, n, smer):
         """x in y sta koordinati ladje
         n je velikost ladje
         smer je pa lahko vertikalna(V) ali pa horizontalna(H), odvisn kam se ladjica širi"""
 
         self.stLadij += 1
         dx = int(smer == 'H')
-        dy = int(smer == 'V') 
-        for _ in range(n): # z zanko lepo nalimamo ladjico po 1 delcek naenkrat(velikost ladje n)
+        dy = int(smer == 'V')
+        for _ in range(n):  # z zanko lepo nalimamo ladjico po 1 delcek naenkrat(velikost ladje n)
             self.polja[y][x] = Polje.Ladja
             x += dx
             y += dy
-    
-    def ustreli(self, x, y):
 
+    def ustreli(self, x, y):
         """x, y koordinati kam ustrelmo
         return je pa a smo zadel ladjo al pa ne"""
 
@@ -48,7 +48,6 @@ class Bojisce:
         return polje
 
     def jeZivo(self):
-
         """a so se kksne ladje na bojišču?"""
 
         for v in self.polja:
@@ -58,13 +57,11 @@ class Bojisce:
         return False
 
     def kotIgralec(self):
-
         """kko js kt plejer vidm bojišče"""
 
         return [[str(s) for s in vr] for vr in self.polja]
 
     def kotNasprotnik(self):
-
         """kko vid bojišče moj nasprotnik"""
 
         bojisce = []
@@ -87,20 +84,21 @@ class Bojisce:
             out += '\n'
         return out
 
+
 class Vojna:
     def __init__(self, stIgralcev, sirina, visina, maxStLadij):
-
         """kok igralcev igra, sirina&visina povesta velkost bojisča
         maxStLadij je pa kok ladij mormo postaut predn zacnemo z vojno"""
 
         self.stIgralcev = stIgralcev
-        self.bojisca = [Bojisce(sirina, visina) for _ in range(self.stIgralcev)]
+        self.bojisca = [Bojisce(sirina, visina)
+                        for _ in range(self.stIgralcev)]
         self.naVrsti = 0
         self.trenutniIgralci = 1
         self.maxStLadij = maxStLadij
 
     def pridruziIgralca(self):
-        
+
         self.trenutniIgralci += 1
 
     def vsiIgralci(self):
@@ -115,13 +113,12 @@ class Vojna:
         self.bojisca[igralec].postaviLadjo(x, y, n, smer)
 
     def ustreli(self, igralec, x, y):
-        
         """x, y koordinati strela"""
 
         self.naVrsti = self.naVrsti + 1
         if self.naVrsti >= self.stIgralcev:
             self.naVrsti = 0
-        
+
         return self.bojisca[igralec].ustreli(x, y)
 
     def kotIgralec(self, igralec):

@@ -27,11 +27,13 @@ class Igra:
 
         self.odstraniZakljucene()
 
-        id_igre = ''.join(random.choice(string.ascii_letters) for _ in range(7))
+        id_igre = ''.join(random.choice(string.ascii_letters)
+                          for _ in range(7))
         while self.igre.get(id_igre, None):
             ''.join(random.choice(string.ascii_letters) for _ in range(7))
 
-        self.igre[id_igre] = model.Vojna(stIgralcev, sirina, visina, maxStLadij)
+        self.igre[id_igre] = model.Vojna(
+            stIgralcev, sirina, visina, maxStLadij)
 
         return id_igre
 
@@ -39,7 +41,6 @@ class Igra:
         """odstrani vojno"""
 
         self.igre.pop(id_igre, None)
-        
 
     def vrniVojno(self, id_igre):
         """vrne id vojne ce obstajak, drgac pa None"""
