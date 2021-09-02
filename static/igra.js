@@ -1,3 +1,5 @@
+/* Funkcija ki caka da se nekaj zgodi na strezniku in potem nekaj izvede*/
+
 
 function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
     let interval;
@@ -24,3 +26,69 @@ function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
         preveri();
     }, 500);
 }
+
+/* ustvarjanje tabele */
+
+
+function ustvariTabelo(parent) {
+    // Ustvari strukturo tabele
+    let t = document.createElement("table");
+    let the = document.createElement("thead");
+    let tb = document.createElement("tbody");
+    t.classList = "table table-bordered border-secondary";
+    t.appendChild(the);
+    t.appendChild(tb);
+
+    // Ustvari prvo vrstico 1...15
+    let tr = document.createElement("tr");
+    for(let i = 0; i < 16; i++) {
+        let th = document.createElement("th");
+        th.classList = "bg-secondary";
+        th.scope = "col";
+        th.innerText = (i) ? i : "";
+        tr.appendChild(th);
+    }
+    the.appendChild(tr);
+
+    // Ustvari crko in polja za igro A..O
+    const crke = "ABCDEFGHIJKLMNO";
+    for(let i = 0; i < 15; i++) {
+        tr = document.createElement("tr");
+        let th = document.createElement("th");
+        th.classList = "bg-secondary";
+        th.scope = "row";
+        th.innerText = crke[i];
+        tr.appendChild(th);
+        for(let j = 0; j < 15; j++) {
+            let td = document.createElement("td");
+            td.classList = "bg-info";
+            td.x = j;
+            td.y = i;
+            tr.appendChild(td);
+        }
+        tb.appendChild(tr);
+    }
+    parent.appendChild(t);
+    return t;
+}
+
+let id_igre;
+let igralec;
+/**
+ * Ob nalozitvi okna
+ */
+$(() => {
+    // Preveri id_igre in igralca
+    id_igre = localStorage.getItem('id_igre');
+    igralec = localStorage.getItem('igralec');
+    if(!id_igre) {
+        alert("Ni id_igre");
+        location.replace('/');
+    }
+    if(!igralec) {
+        alert("Ni igralec");
+        location.replace('/');
+    }
+    // Ce obstaja main metoda jo poklici
+    if(typeof main != 'undefined') main();
+});
