@@ -8,6 +8,6 @@ Ko poveste pozicijo vam mora nasprotnik(oz. program) povedati ali je na tem mest
 ## Konec igre:
 Igra se konča, ko prvi od igralcev potopi vse nasprotnikove ladje.
 
-## Kko igrati?
+## Kako igrati?
 V VS Code nalozimo bottle(s pomocjo pip install bottle) v terminalu. Potem pa pozenemo spletni vmesnik.
-eden od igralcev ustvari igro in dobi 7mestno kodo, ki jo potem posreduje sooigralcu ki se s to kodo pridruzi igri. Sledi postavitev ladji, potek igre pa je že opisan.
+Eden od igralcev ustvari igro in dobi 7-mestno kodo, ki jo potem posreduje soigralcu, ki se s to kodo pridruzi igri. Sledi postavitev ladji, potek igre pa je že opisan.
