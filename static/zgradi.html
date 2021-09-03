@@ -10,6 +10,95 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <link rel="icon" type="image/png" href="/static/ladjetunkec.png">
     <script src="/static/igra.js"></script>
+    <style>
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
 
-    
+        td {
+            width: 25%;
+        }
+    </style>
 </head>
+
+<body>
+    <div class="container-fluid m-0 p-0">
+        <div class="row pt-5">
+            <div class="col-md-6 offset-md-3 text-center" id="ustvari">
+                <h3 id="naslov">Zgradi svojo mornarico</h3>
+            </div>
+        </div>
+        <div class="row px-2">
+            <div class="col-md-4 offset-md-3 text-center">
+                <h5 id="Naslov">Ladijce</h5>
+                <div class="form-check form-check-inline">
+                    <input id="lv1" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="2">
+                    <label for="lv1" class="form-check-label">
+                        ##
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv2"  class="form-check-input" type="radio" name="ladijcaVelikost" velikost="2">
+                    <label for="lv2"class="form-check-label">
+                        ##
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv3" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="3">
+                    <label for="lv3" class="form-check-label">
+                        ###
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv4" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="3">
+                    <label for="lv4" class="form-check-label">
+                        ###
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv5" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="4">
+                    <label for="lv5" class="form-check-label">
+                        ####
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv6" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="4">
+                    <label for="lv6" class="form-check-label">
+                        ####
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="lv7" class="form-check-input" type="radio" name="ladijcaVelikost" velikost="5">
+                    <label for="lv7" class="form-check-label">
+                        #####
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-2 text-center">
+                <h5>Smer</h5>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ladijcaSmer" smer="V" checked>
+                    <label class="form-check-label">
+                        Vertikalna
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="ladijcaSmer" smer="H">
+                    <label class="form-check-label">
+                        Horizontalna
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function main() {
+            let t = ustvariTabelo(document.getElementById("ustvari"));
+            postavljanjeZaTabelo(t);
+        }
+    </script>
+</body>
+
+</html>
+    
