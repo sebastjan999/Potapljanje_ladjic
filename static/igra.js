@@ -4,7 +4,7 @@
  * @param  {(String|function)}  callback    Lokacija preusmeritve ce String oz callback funkcija
  * @param  {function}           [preveri_f = (el) => el =='true']   Funkcija za preverjanje konec cakanja (privzeto odgovor == 'true')
  */
-function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
+function zacniCakanje(url, callback, preveri_f = (el) => el == 'true') {
     let interval;
     // Definiraj funkcijo za preverjanje
     let preveri = async () => {
@@ -13,7 +13,7 @@ function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
             type: 'POST',
             onerror: {}
         });
-        if(preveri_f(odgovor)) {
+        if (preveri_f(odgovor)) {
             if (typeof callback == 'string')
                 location.replace(callback);
             else {
@@ -25,7 +25,7 @@ function zacniCakanje(url, callback, preveri_f = (el) => el =='true') {
     // Takoj na zacetku prever
     preveri();
     // In potem se vsake pol sekunde
-    interval = setInterval(async ()=> {
+    interval = setInterval(async () => {
         preveri();
     }, 500);
 }
@@ -46,7 +46,7 @@ function ustvariTabelo(parent) {
 
     // Ustvari prvo vrstico 1...15
     let tr = document.createElement("tr");
-    for(let i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
         let th = document.createElement("th");
         th.classList = "bg-secondary";
         th.scope = "col";
@@ -57,14 +57,14 @@ function ustvariTabelo(parent) {
 
     // Ustvari crko in polja za igro A..O
     const crke = "ABCDEFGHIJKLMNO";
-    for(let i = 0; i < 15; i++) {
+    for (let i = 0; i < 15; i++) {
         tr = document.createElement("tr");
         let th = document.createElement("th");
         th.classList = "bg-secondary";
         th.scope = "row";
         th.innerText = crke[i];
         tr.appendChild(th);
-        for(let j = 0; j < 15; j++) {
+        for (let j = 0; j < 15; j++) {
             let td = document.createElement("td");
             td.classList = "bg-info";
             td.x = j;
@@ -86,16 +86,16 @@ $(() => {
     // Preveri id_igre in igralca
     id_igre = localStorage.getItem('id_igre');
     igralec = localStorage.getItem('igralec');
-    if(!id_igre) {
+    if (!id_igre) {
         alert("Ni id_igre");
         location.replace('/');
     }
-    if(!igralec) {
+    if (!igralec) {
         alert("Ni igralec");
         location.replace('/');
     }
     // Ce obstaja main metoda jo poklici
-    if(typeof main != 'undefined') main();
+    if (typeof main != 'undefined') main();
 });
 
 /**
@@ -106,10 +106,195 @@ $(() => {
  * @return {?HTMLElement}
  */
 function at(tabela, x, y) {
-    if(x < 0 || y < 0) return undefined;
+    if (x < 0 || y < 0) return undefined;
     try {
         return tabela.children[1].children[y].children[1 + x];
-    } catch(e) {
+    } catch (e) {
         return undefined;
     }
 }
+
+/**
+ * Ali tabela v pravokotniku na x, y sirine w, h vsebuje ladjo
+ * @param  {HTMLElement} tabela Tabela v katerem iscemo
+ * @param  {number} x           X koordinata
+ * @param  {number} y           Y koordinata
+ * @param  {number} [w=1]       Sirina pravokotnika
+ * @param  {number} [h=1]       Visina pravokotnika
+ * @return {bool}            Ali pravokotnik vsebuje ladjo
+ */
+ function vsebujeLadjo(tabela, x, y, w = 1, h = 1) {
+    for(let i = x; i < x + w; i++) {
+        for(let j = y; j < y + h; j++){
+            let el = at(tabela, i, j);
+            if(el && el.classList != "bg-info")
+                return true;
+        }
+    }
+    return false;
+} 
+/**
+ * Koda, ki skrbi za vstavljanje elementov v tabelo (zgradi.html) 
+ * @param  {HTMLElement} tabela Tabela v katero vstavljamo ladje
+ */
+ function postavljanjeZaTabelo(tabela) {
+    /**
+     * Ali se lahko postavi ladijca
+     * @param  {number} x       X koordinata ladje
+     * @param  {number} y       Y koordinata ladje
+     * @param  {number} n       Velikost ladje
+     * @param  {String} smer    Smer ladje ("V" ali "H")
+     * @return {boolean} Lahko se postavi
+     */
+    function lahkoPostavi(x, y, n, smer) {
+        if(x > 15-n && smer == "H" || y > 15- n && smer == "V") return false;
+        if(vsebujeLadjo(tabela, x - 1, y - 1, (smer == "H") ? n + 2 : 3, (smer == "V") ? n + 2 : 3)) return false;
+        return true;
+    }
+
+/**
+ * Koda, ki skrbi za vstavljanje elementov v tabelo (zgradi.html) 
+ * @param  {HTMLElement} tabela Tabela v katero vstavljamo ladje
+ */
+ function postavljanjeZaTabelo(tabela) {
+    /**
+     * Ali se lahko postavi ladijca
+     * @param  {number} x       X koordinata ladje
+     * @param  {number} y       Y koordinata ladje
+     * @param  {number} n       Velikost ladje
+     * @param  {String} smer    Smer ladje ("V" ali "H")
+     * @return {boolean} Lahko se postavi
+     */
+    function lahkoPostavi(x, y, n, smer) {
+        if(x > 15-n && smer == "H" || y > 15- n && smer == "V") return false;
+        if(vsebujeLadjo(tabela, x - 1, y - 1, (smer == "H") ? n + 2 : 3, (smer == "V") ? n + 2 : 3)) return false;
+        return true;
+    }
+
+    
+    /**
+     * Postavi ladijco na strezniku
+     * @param  {number} x       X koordinata ladje
+     * @param  {number} y       Y koordinata ladje
+     * @param  {number} n       Velikost ladje
+     * @param  {String} smer    Smer ladje ("V" ali "H")
+     * @return {Promise<String>}Obljuba odgovora
+     */
+    function postaviLadjo(x, y, n, smer) {
+        return $.ajax({
+            url: `/igra/postaviLadjo/${id_igre}`,
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            data: {
+                igralec: igralec,
+                x: x,
+                y: y,
+                n: n,
+                s: smer
+            },
+            onerror: {}
+        });
+    }
+
+    
+    /**
+     * @return {number} Velikost izbrane ladijce ali 0 ce ni izbrana
+     */
+    function ladijca() {
+        const input = document.querySelector('input[name="ladijcaVelikost"]:checked');
+        if (input)
+            return Number(input.attributes.velikost.value);
+        return 0;
+    }
+
+    /**
+     * @returns {String} Izbrana smer postavitve 
+     */
+    function smer() {
+        return document.querySelector('input[name="ladijcaSmer"]:checked').attributes.smer.value;
+    }
+
+    // Za vsako celico
+    Array.from(tabela.querySelectorAll("td")).forEach( td => {
+        // Prehod z misko
+        // Dodaj predogled ladijce ce lahko postavi
+        td.addEventListener("mouseover", (ev) => {
+            ev.target.style.outline = 'solid 2px red';
+            let n = ladijca();
+            if(n == 0) return;
+            let x = ev.target.x;
+            let y = ev.target.y;
+            let s = smer();
+            if(lahkoPostavi(x, y, n, s)){
+                let dx = Number(s == "H");
+                let dy = Number(s == "V");
+                ev.target.style.outline = 'solid 2px yellow';
+                for(let i = 1; i < n; i++) {
+                    x += dx;
+                    y += dy;
+                    at(tabela, x, y).style.outline = 'solid 2px yellow';
+                }
+            }
+        });
+        // Izhod z misko
+        // Odstrani predogled
+        td.addEventListener("mouseleave", (ev) => {
+            ev.target.style.outline = '';
+            let n = ladijca();
+            let s = smer();
+            let x = ev.target.x;
+            let y = ev.target.y;
+            if(n == 0 || !lahkoPostavi(x, y, n, s) ) return;
+            let dx = Number(s == "H");
+            let dy = Number(s == "V");
+            for(let i = 1; i < n; i++) {
+                x += dx;
+                y += dy;
+                at(tabela, x, y).style.outline = '';
+            }
+        });
+        // Ob kliku
+        td.addEventListener("click", async (ev) => {
+            let n = ladijca();
+            if(n == 0) return;
+            let x = ev.target.x;
+            let y = ev.target.y;
+            let s = smer();
+            // Ce lahko postavi
+            if(lahkoPostavi(x, y, n, s)){
+                // Dodaj ladijco na streznik
+                await postaviLadjo(x, y, n, s);
+
+                // Narisi ladijco
+                let dx = Number(s == "H");
+                let dy = Number(s == "V");
+                ev.target.classList = 'bg-secondary';
+                ev.target.innerText = '#';
+                ev.target.style.outline = '';
+                for(let i = 1; i < n; i++) {
+                    x += dx;
+                    y += dy;
+                    let el = at(tabela, x, y);
+                    el.classList = 'bg-secondary';
+                    el.innerText = '#';
+                    el.style.outline = '';
+                }
+
+                // Izklopi izbiro za postavljeno ladijco 
+                const input = document.querySelector('input[name="ladijcaVelikost"]:checked');
+                input.disabled = true;
+                input.checked = false;
+
+                // Izberi naslednjo ladijco oziroma zacni cakati za zacetek vojne ce ni vec ladijc za postaviti
+                let next = document.querySelector('input[name="ladijcaVelikost"]:not(:disabled)');
+                if(next == null) {
+                    zacniCakanje(`/igra/vseLadje/${id_igre}`, '/igra/vojna');
+                    document.getElementById("naslov").innerText = 'Cakaj ostale igralce...';
+                } else {
+                    next.checked = true;
+                }
+            }
+        });
+    });
+}
+
