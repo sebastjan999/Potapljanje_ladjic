@@ -2,11 +2,12 @@
 
 ## Potek igre:
 Z nasprotnikom se izmenjujete pri ciljanju nasprotnikovih ladij.
-Ko poveste pozicijo vam mora nasprotnik povedati ali je na tem mestu zadetek ali prazno polje.
-Če uganete pozicijo na kateri se nahaja nasprotnikova ladjica je to zadetek. Nasprotnika si morata povedati za zadetke in zgrešene klice, kot tudi katera ladja je zadeta (letalonosilka, podmornica, rušilec itd.) Zadetki in zgrešeni klici se zabeležijo na polju oz. tabli za označevanje. Z rdečo barvo označujte zadetke, z belo pa zgreške. Na isti način se označujejo tudi ladje, tako, da se vanje vstavljajo zatiči.
+Ko poveste pozicijo vam mora nasprotnik(oz. program) povedati ali je na tem mestu zadetek ali prazno polje.
+Če uganete pozicijo na kateri se nahaja nasprotnikova ladjica je to zadetek. Nasprotnika si morata povedati za zadetke in zgrešene klice. Zadetki in zgrešeni klici se zabeležijo na polju oz. tabli za označevanje. Z X so označeni zadetki, z O pa zgreški. ladje so oznacene z #.
 
 ## Konec igre:
 Igra se konča, ko prvi od igralcev potopi vse nasprotnikove ladje.
 
-
-## manka se: zgradi.html in vojna.html do konca,  pa igra.js finishirat
+## Kko igrati?
+V VS Code nalozimo bottle(s pomocjo pip install bottle) v terminalu. Potem pa pozenemo spletni vmesnik.
+eden od igralcev ustvari igro in dobi 7mestno kodo, ki jo potem posreduje sooigralcu ki se s to kodo pridruzi igri. Sledi postavitev ladji, potek igre pa je že opisan.
